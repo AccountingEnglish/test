@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#8E1728">
+  <title>進捗</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    .progress-hero {
+      padding: var(--space-5) var(--space-4);
+      text-align: center;
+      background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-bg) 100%);
+    }
+
+    .progress-hero__big {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: var(--space-1);
+    }
+
+    .progress-hero__big sub {
+      font-size: var(--font-size-md);
+      font-weight: 700;
+      color: var(--color-text-sub);
+      margin-left: var(--space-1);
+    }
+
+    .progress-hero__label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-sub);
+    }
+
+    .stats-row {
+      padding: 0 var(--space-4) var(--space-5);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-2);
+    }
+
+    /* カテゴリ進捗 */
+    .category-progress {
+      padding: 0 var(--space-4);
+    }
+
+    .category-item {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .category-item:last-child {
+      border-bottom: none;
+    }
+
+    .category-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-2);
+    }
+
+    .category-item__name {
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .category-item__count {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-sub);
+    }
+
+    .category-item__count strong {
+      color: var(--color-primary);
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+    }
+
+    /* 学習量グラフ */
+    .activity-chart {
+      padding: var(--space-3) var(--space-4) var(--space-5);
+    }
+
+    .activity-bars {
+      display: flex;
+      gap: var(--space-2);
+      align-items: flex-end;
+      height: 120px;
+      padding: var(--space-3) 0;
+    }
+
+    .activity-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .activity-bar__visual {
+      width: 100%;
+      background-color: var(--color-primary);
+      border-radius: var(--radius-sm);
+      min-height: 8px;
+      transition: height var(--transition-slow);
+    }
+
+    .activity-bar__visual--mute {
+      background-color: var(--color-border);
+    }
+
+    .activity-bar__day {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-sub);
+    }
+
+    .activity-bar__day--today {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <main class="main-content">
+
+      <header class="app-header">
+        <h1 class="app-header__title">進捗</h1>
+      </header>
+
+      <!-- 全体進捗ヒーロー -->
+      <div class="progress-hero">
+        <div class="progress-hero__big">20<sub>%</sub></div>
+        <div class="progress-hero__label">習得済み 4 / 20語</div>
+      </div>
+
+      <!-- 統計 -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card__label">連続学習</div>
+          <div class="stat-card__value">5<span class="stat-card__suffix">日</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">総解答数</div>
+          <div class="stat-card__value">42<span class="stat-card__suffix">問</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">正答率</div>
+          <div class="stat-card__value">87<span class="stat-card__suffix">%</span></div>
+        </div>
+      </div>
+
+      <!-- カテゴリ別進捗 -->
+      <section class="section">
+        <h2 class="section__title">カテゴリ別進捗</h2>
+        <div class="category-progress">
+          <div class="category-item">
+            <div class="category-item__header">
+              <span class="category-item__name">財務会計</span>
+              <span class="category-item__count"><strong>3</strong> / 13語（23%）</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="width: 23%;"></div>
+            </div>
+          </div>
+          <div class="category-item">
+            <div class="category-item__header">
+              <span class="category-item__name">管理会計</span>
+              <span class="category-item__count"><strong>0</strong> / 3語（0%）</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="category-item">
+            <div class="category-item__header">
+              <span class="category-item__name">監査・ガバナンス</span>
+              <span class="category-item__count"><strong>0</strong> / 2語（0%）</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="category-item">
+            <div class="category-item__header">
+              <span class="category-item__name">共通用語</span>
+              <span class="category-item__count"><strong>1</strong> / 2語（50%）</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-bar__fill" style="width: 50%;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 学習量グラフ -->
+      <section class="section">
+        <h2 class="section__title">直近7日間の学習</h2>
+        <p class="section__subtitle">毎日コツコツが力になる</p>
+        <div class="activity-chart">
+          <div class="activity-bars">
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 30%;"></div>
+              <span class="activity-bar__day">月</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 60%;"></div>
+              <span class="activity-bar__day">火</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 80%;"></div>
+              <span class="activity-bar__day">水</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 45%;"></div>
+              <span class="activity-bar__day">木</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 90%;"></div>
+              <span class="activity-bar__day">金</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 70%;"></div>
+              <span class="activity-bar__day">土</span>
+            </div>
+            <div class="activity-bar">
+              <div class="activity-bar__visual" style="height: 40%;"></div>
+              <span class="activity-bar__day activity-bar__day--today">今日</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 下部タブバー -->
+    <nav class="tab-bar">
+      <a href="../index.html" class="tab-bar__item">
+        <span class="tab-bar__icon">⌂</span>
+        <span>ホーム</span>
+      </a>
+      <a href="word-list.html" class="tab-bar__item">
+        <span class="tab-bar__icon">≡</span>
+        <span>単語</span>
+      </a>
+      <a href="progress.html" class="tab-bar__item tab-bar__item--active">
+        <span class="tab-bar__icon">◔</span>
+        <span>進捗</span>
+      </a>
+      <a href="settings.html" class="tab-bar__item">
+        <span class="tab-bar__icon">⚙</span>
+        <span>設定</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#8E1728">
+  <title>設定</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    .settings-section-title {
+      padding: var(--space-4) var(--space-4) var(--space-2);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-sub);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .settings-group {
+      background-color: var(--color-bg-elevated);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .danger-action {
+      color: var(--color-error) !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <main class="main-content">
+
+      <header class="app-header">
+        <h1 class="app-header__title">設定</h1>
+      </header>
+
+      <!-- アプリについて -->
+      <h2 class="settings-section-title">アプリについて</h2>
+      <div class="settings-group">
+        <div class="list-item">
+          <span class="list-item__label">バージョン</span>
+          <span class="list-item__value">0.1.0 (Wireframe)</span>
+        </div>
+        <a href="#" class="list-item">
+          <span class="list-item__label">使い方ガイド</span>
+          <span class="list-item__chevron">›</span>
+        </a>
+        <a href="#" class="list-item">
+          <span class="list-item__label">フィードバックを送る</span>
+          <span class="list-item__chevron">›</span>
+        </a>
+      </div>
+
+      <!-- データ管理 -->
+      <h2 class="settings-section-title">データ</h2>
+      <div class="settings-group">
+        <button class="list-item">
+          <span class="list-item__label">学習データをエクスポート</span>
+          <span class="list-item__chevron">›</span>
+        </button>
+        <button class="list-item">
+          <span class="list-item__label danger-action">学習データをリセット</span>
+          <span class="list-item__chevron">›</span>
+        </button>
+      </div>
+
+      <!-- プライバシー -->
+      <h2 class="settings-section-title">プライバシー</h2>
+      <div class="settings-group">
+        <a href="#" class="list-item">
+          <span class="list-item__label">プライバシーポリシー</span>
+          <span class="list-item__chevron">›</span>
+        </a>
+        <a href="#" class="list-item">
+          <span class="list-item__label">利用規約</span>
+          <span class="list-item__chevron">›</span>
+        </a>
+      </div>
+
+      <p style="text-align: center; padding: var(--space-5); font-size: var(--font-size-xs); color: var(--color-text-mute);">
+        © 2026 Accounting Vocabulary App
+      </p>
+
+    </main>
+
+    <!-- 下部タブバー -->
+    <nav class="tab-bar">
+      <a href="../index.html" class="tab-bar__item">
+        <span class="tab-bar__icon">⌂</span>
+        <span>ホーム</span>
+      </a>
+      <a href="word-list.html" class="tab-bar__item">
+        <span class="tab-bar__icon">≡</span>
+        <span>単語</span>
+      </a>
+      <a href="progress.html" class="tab-bar__item">
+        <span class="tab-bar__icon">◔</span>
+        <span>進捗</span>
+      </a>
+      <a href="settings.html" class="tab-bar__item tab-bar__item--active">
+        <span class="tab-bar__icon">⚙</span>
+        <span>設定</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>

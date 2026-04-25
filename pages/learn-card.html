@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#8E1728">
+  <title>カードめくり学習</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* 進捗インジケーター */
+    .learn-progress {
+      padding: var(--space-3) var(--space-4);
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .learn-progress__header {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-sub);
+      margin-bottom: var(--space-2);
+    }
+
+    /* カードコンテナ */
+    .card-container {
+      padding: var(--space-5) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    /* カテゴリ・難易度バッジ */
+    .card-meta {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    /* カード本体 */
+    .word-card {
+      width: 100%;
+      min-height: 320px;
+      background-color: var(--color-bg-elevated);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+      padding: var(--space-6) var(--space-5);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform var(--transition-slow);
+      perspective: 1000px;
+    }
+
+    .word-card:active {
+      transform: scale(0.98);
+    }
+
+    .word-card__hint {
+      position: absolute;
+      bottom: var(--space-4);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: var(--font-size-xs);
+      color: var(--color-text-mute);
+    }
+
+    /* 表面：英単語 */
+    .word-card__english {
+      font-size: var(--font-size-xl);
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .word-card__pos {
+      margin-top: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-mute);
+      font-style: italic;
+    }
+
+    /* 裏面：日本語と解説 */
+    .word-card--flipped .word-card__english {
+      display: none;
+    }
+
+    .word-card--flipped .word-card__pos {
+      display: none;
+    }
+
+    .word-card__back {
+      display: none;
+      width: 100%;
+    }
+
+    .word-card--flipped .word-card__back {
+      display: block;
+    }
+
+    .word-card__japanese {
+      font-size: var(--font-size-lg);
+      font-weight: 800;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .word-card__english-small {
+      font-size: var(--font-size-base);
+      color: var(--color-text-sub);
+      font-weight: 500;
+      margin-bottom: var(--space-4);
+    }
+
+    .word-card__description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-sub);
+      line-height: 1.7;
+      text-align: left;
+      padding: 0 var(--space-2);
+    }
+
+    /* ナビゲーション領域 */
+    .card-nav {
+      display: flex;
+      gap: var(--space-3);
+      width: 100%;
+      align-items: center;
+    }
+
+    .card-nav__arrow {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-bg-elevated);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--color-text);
+      transition: all var(--transition-fast);
+    }
+
+    .card-nav__arrow:active {
+      background-color: var(--color-primary-50);
+      transform: scale(0.95);
+    }
+
+    .card-nav__arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .card-nav__center {
+      flex: 1;
+      text-align: center;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-mute);
+    }
+
+    /* アクションボタン群 */
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      padding: 0 var(--space-4);
+      margin-top: var(--space-2);
+    }
+
+    .card-action {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--color-border);
+      background-color: var(--color-bg-elevated);
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text);
+      cursor: pointer;
+      font-family: var(--font-base);
+      min-height: 48px;
+      transition: all var(--transition-fast);
+    }
+
+    .card-action--known {
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+
+    .card-action--again {
+      border-color: var(--color-warning);
+      color: var(--color-warning);
+    }
+
+    .card-action:active {
+      transform: scale(0.96);
+    }
+
+    /* 「もう知ってる」自己申告ボタン */
+    .skip-action {
+      margin: var(--space-3) var(--space-4) 0;
+    }
+
+    .skip-action button {
+      width: 100%;
+      padding: var(--space-2);
+      background: none;
+      border: none;
+      color: var(--color-text-mute);
+      font-size: var(--font-size-xs);
+      cursor: pointer;
+      font-family: var(--font-base);
+      text-decoration: underline;
+      text-decoration-color: var(--color-border);
+      text-underline-offset: 4px;
+    }
+
+    .skip-action button:active {
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <main class="main-content">
+
+      <header class="app-header">
+        <button class="app-header__back" onclick="history.back()">‹</button>
+        <h1 class="app-header__title">カードめくり</h1>
+      </header>
+
+      <!-- 学習進捗 -->
+      <div class="learn-progress">
+        <div class="learn-progress__header">
+          <span><span id="currentNum">3</span> / <span id="totalNum">20</span></span>
+          <span>正解 <span id="correctNum">2</span> / 不正解 <span id="incorrectNum">0</span></span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" style="width: 15%;"></div>
+        </div>
+      </div>
+
+      <!-- カード -->
+      <div class="card-container">
+        <div class="card-meta">
+          <span class="badge badge--primary" id="cardCategory">財務会計</span>
+          <span class="badge" id="cardLevel">基礎</span>
+        </div>
+
+        <div class="word-card" id="wordCard" onclick="flipCard()">
+          <div class="word-card__english" id="englishWord">depreciation</div>
+          <div class="word-card__pos">noun</div>
+
+          <div class="word-card__back">
+            <div class="word-card__japanese" id="japaneseWord">減価償却</div>
+            <div class="word-card__english-small" id="englishWordSmall">depreciation</div>
+            <div class="word-card__description" id="description">
+              有形固定資産の取得原価を耐用年数にわたって費用配分する手続き。
+              建物・機械装置などの長期間使用する資産について、毎期均等または使用度合いに応じて費用化する。
+            </div>
+          </div>
+
+          <p class="word-card__hint" id="cardHint">タップで意味を見る</p>
+        </div>
+
+        <!-- ナビゲーション -->
+        <div class="card-nav">
+          <button class="card-nav__arrow" onclick="prevCard()">‹</button>
+          <div class="card-nav__center">スワイプまたはタップで操作</div>
+          <button class="card-nav__arrow" onclick="nextCard()">›</button>
+        </div>
+      </div>
+
+      <!-- 評価ボタン（裏面表示時のみ実質的に押す想定） -->
+      <div class="card-actions">
+        <button class="card-action card-action--again" onclick="markAgain()">もう一度</button>
+        <button class="card-action card-action--known" onclick="markKnown()">覚えた</button>
+      </div>
+
+      <!-- 自己申告スキップ -->
+      <div class="skip-action">
+        <button onclick="markAlreadyKnown()">この単語はもう知ってる（スキップ）</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/words-data.js"></script>
+  <script>
+    let currentIndex = 2; // ダミー：3番目の単語表示中
+    let isFlipped = false;
+
+    function flipCard() {
+      const card = document.getElementById('wordCard');
+      const hint = document.getElementById('cardHint');
+      isFlipped = !isFlipped;
+      card.classList.toggle('word-card--flipped', isFlipped);
+      hint.textContent = isFlipped ? 'タップで戻す' : 'タップで意味を見る';
+    }
+
+    function nextCard() {
+      currentIndex = Math.min(currentIndex + 1, SAMPLE_WORDS.length - 1);
+      isFlipped = false;
+      updateCard();
+    }
+
+    function prevCard() {
+      currentIndex = Math.max(currentIndex - 1, 0);
+      isFlipped = false;
+      updateCard();
+    }
+
+    function updateCard() {
+      const word = SAMPLE_WORDS[currentIndex];
+      document.getElementById('englishWord').textContent = word.english;
+      document.getElementById('japaneseWord').textContent = word.japanese;
+      document.getElementById('englishWordSmall').textContent = word.english;
+      document.getElementById('description').textContent = word.description || '';
+      document.getElementById('cardCategory').textContent = CATEGORY_LABELS[word.category];
+      document.getElementById('cardLevel').textContent = LEVEL_LABELS[word.level];
+      document.getElementById('currentNum').textContent = currentIndex + 1;
+
+      const card = document.getElementById('wordCard');
+      card.classList.remove('word-card--flipped');
+      document.getElementById('cardHint').textContent = 'タップで意味を見る';
+    }
+
+    function markKnown() {
+      // ダミー：次の単語へ
+      nextCard();
+    }
+
+    function markAgain() {
+      nextCard();
+    }
+
+    function markAlreadyKnown() {
+      if (confirm('この単語を「もう知ってる」とマークしますか？\n3つの異なる日にマークすると習得済みになります。')) {
+        nextCard();
+      }
+    }
+  </script>
+</body>
+</html>
