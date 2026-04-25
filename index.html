@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#8E1728">
+  <title>会計英単語アプリ（仮）</title>
+
+  <!-- Google Fonts: M PLUS Rounded 1c -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- スタイル -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <style>
+    /* ホーム画面固有のスタイル */
+    .home-header {
+      padding: var(--space-5) var(--space-4) var(--space-4);
+      background: linear-gradient(180deg, var(--color-primary-50) 0%, var(--color-bg) 100%);
+    }
+
+    .home-greeting {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-sub);
+      margin-bottom: var(--space-1);
+    }
+
+    .home-title {
+      font-size: var(--font-size-lg);
+      font-weight: 800;
+      color: var(--color-text);
+      letter-spacing: -0.02em;
+    }
+
+    .home-title__brand {
+      color: var(--color-primary);
+    }
+
+    /* 進捗サマリー */
+    .progress-summary {
+      background-color: var(--color-bg-elevated);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: 0 var(--space-4) var(--space-5);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-card);
+    }
+
+    .progress-summary__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-3);
+    }
+
+    .progress-summary__label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-sub);
+      font-weight: 500;
+    }
+
+    .progress-summary__count {
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+      font-weight: 700;
+    }
+
+    .progress-summary__count strong {
+      color: var(--color-primary);
+      font-size: var(--font-size-md);
+    }
+
+    /* 統計グリッド */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .stat-mini {
+      text-align: center;
+    }
+
+    .stat-mini__value {
+      font-size: var(--font-size-md);
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    .stat-mini__label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-sub);
+      margin-top: 2px;
+    }
+
+    /* 学習モードリスト */
+    .mode-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <main class="main-content">
+
+      <!-- ヘッダー：挨拶とアプリタイトル -->
+      <header class="home-header">
+        <p class="home-greeting">こんにちは</p>
+        <h1 class="home-title">
+          <span class="home-title__brand">会計英単語</span>を学ぼう
+        </h1>
+      </header>
+
+      <!-- 進捗サマリー -->
+      <div class="progress-summary">
+        <div class="progress-summary__header">
+          <span class="progress-summary__label">あなたの習得状況</span>
+          <span class="progress-summary__count">
+            <strong>4</strong> / 20語
+          </span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" style="width: 20%;"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-mini">
+            <div class="stat-mini__value">5日</div>
+            <div class="stat-mini__label">連続学習</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini__value">87%</div>
+            <div class="stat-mini__label">正答率</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini__value">42</div>
+            <div class="stat-mini__label">解答数</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 学習モード -->
+      <section class="section">
+        <h2 class="section__title">学習する</h2>
+        <p class="section__subtitle">3つのモードから選んでください</p>
+
+        <div class="mode-list">
+          <a href="pages/range-select.html?mode=card" class="mode-card">
+            <div class="mode-card__icon">📖</div>
+            <div class="mode-card__body">
+              <div class="mode-card__title">カードめくり</div>
+              <div class="mode-card__desc">単語カードをめくって覚える</div>
+            </div>
+            <div class="mode-card__chevron">›</div>
+          </a>
+
+          <a href="pages/range-select.html?mode=quiz" class="mode-card">
+            <div class="mode-card__icon">✓</div>
+            <div class="mode-card__body">
+              <div class="mode-card__title">4択クイズ</div>
+              <div class="mode-card__desc">英単語の意味を選ぶ</div>
+            </div>
+            <div class="mode-card__chevron">›</div>
+          </a>
+
+          <a href="pages/range-select.html?mode=input" class="mode-card">
+            <div class="mode-card__icon">🔤</div>
+            <div class="mode-card__body">
+              <div class="mode-card__title">スペル並べ</div>
+              <div class="mode-card__desc">日本語から英単語を組み立てる</div>
+            </div>
+            <div class="mode-card__chevron">›</div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 下部タブバー -->
+    <nav class="tab-bar">
+      <a href="index.html" class="tab-bar__item tab-bar__item--active">
+        <span class="tab-bar__icon">⌂</span>
+        <span>ホーム</span>
+      </a>
+      <a href="pages/word-list.html" class="tab-bar__item">
+        <span class="tab-bar__icon">≡</span>
+        <span>単語</span>
+      </a>
+      <a href="pages/progress.html" class="tab-bar__item">
+        <span class="tab-bar__icon">◔</span>
+        <span>進捗</span>
+      </a>
+      <a href="pages/settings.html" class="tab-bar__item">
+        <span class="tab-bar__icon">⚙</span>
+        <span>設定</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="js/words-data.js"></script>
+</body>
+</html>

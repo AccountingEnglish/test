@@ -1,0 +1,349 @@
+/* ==========================================================================
+   components.css - 再利用可能なコンポーネント
+   ========================================================================== */
+
+/* ----- ボタン ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  font-family: var(--font-base);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn--primary:active {
+  background-color: var(--color-primary-dark);
+  transform: scale(0.98);
+}
+
+.btn--secondary {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn--secondary:active {
+  background-color: var(--color-primary-50);
+  transform: scale(0.98);
+}
+
+.btn--ghost {
+  background: none;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn--ghost:active {
+  background-color: var(--color-border);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--sm {
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.btn--lg {
+  min-height: 56px;
+  font-size: var(--font-size-md);
+}
+
+/* ----- 学習モードカード（ホーム画面の主要要素） ----- */
+.mode-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background-color: var(--color-bg-elevated);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--font-base);
+  text-align: left;
+}
+
+.mode-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.mode-card__icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-50);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.mode-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.mode-card__title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.mode-card__desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-sub);
+}
+
+.mode-card__chevron {
+  flex-shrink: 0;
+  color: var(--color-text-mute);
+  font-size: 20px;
+}
+
+/* ----- 進捗バー ----- */
+.progress-bar {
+  height: 8px;
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.progress-bar__fill--success {
+  background-color: var(--color-success);
+}
+
+/* ----- 統計カード ----- */
+.stat-card {
+  background-color: var(--color-bg-elevated);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.stat-card__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-sub);
+  margin-bottom: var(--space-1);
+}
+
+.stat-card__value {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.stat-card__suffix {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-text-sub);
+  margin-left: 2px;
+}
+
+/* ----- タブバー（下部ナビゲーション） ----- */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width-mobile);
+  height: var(--tab-bar-height);
+  background-color: var(--color-bg-elevated);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  z-index: 100;
+  /* iPhone安全領域対応 */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-bar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  color: var(--color-text-mute);
+  font-family: var(--font-base);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  padding: var(--space-2);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.tab-bar__item--active {
+  color: var(--color-primary);
+}
+
+.tab-bar__item:active {
+  opacity: 0.5;
+}
+
+.tab-bar__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ----- バッジ ----- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  background-color: var(--color-border);
+  color: var(--color-text-sub);
+}
+
+.badge--primary {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary);
+}
+
+.badge--success {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.badge--warning {
+  background-color: var(--color-warning-light);
+  color: var(--color-warning);
+}
+
+/* ----- チェックボックス選択（範囲選択画面で使用） ----- */
+.choice-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-elevated);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-sub);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-base);
+  min-height: 40px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.choice-chip--selected {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.choice-chip:active {
+  transform: scale(0.96);
+}
+
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ----- 区切り線 ----- */
+.divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-4) 0;
+  border: none;
+}
+
+/* ----- リスト項目（設定画面など） ----- */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  text-decoration: none;
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: var(--font-base);
+  width: 100%;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  text-align: left;
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-fast);
+}
+
+.list-item:active {
+  background-color: var(--color-bg);
+}
+
+.list-item__label {
+  flex: 1;
+}
+
+.list-item__value {
+  color: var(--color-text-sub);
+  font-size: var(--font-size-sm);
+}
+
+.list-item__chevron {
+  color: var(--color-text-mute);
+  font-size: 18px;
+}
+
+/* ----- 空状態 ----- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+  color: var(--color-text-sub);
+}
+
+.empty-state__icon {
+  font-size: 48px;
+  margin-bottom: var(--space-3);
+  opacity: 0.4;
+}
+
+.empty-state__text {
+  font-size: var(--font-size-sm);
+}
